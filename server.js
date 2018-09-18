@@ -35,10 +35,10 @@ app.use(express.static("public"));
 
 // Routes
 // =============================================================
-require("./routes/html-routes.js")(app);
-require("./routes/author-routes.js")(app);
-require("./routes/notes-routes.js")(app);
-require("./routes/scraper-routes.js")(app);
+require("../routes/html-routes.js")(app);
+require("../routes/author-routes.js")(app);
+require("../routes/notes-routes.js")(app);
+require("../routes/scraper-routes.js")(app);
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
