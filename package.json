@@ -24,8 +24,8 @@
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.2.15",
     "morgan": "^1.9.1",
+    "npm": "^6.4.1",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "serve-favicon": "^2.5.0"
+    "request-promise": "^4.2.2"
   }
 }
