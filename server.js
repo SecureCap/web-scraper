@@ -1,57 +1,51 @@
 //Dependencies
-var express = require('express'),
-    mongoose = require('mongoose'),
-    exphbs = require('express-handlebars'),
-    bodyParser = require('body-parser'),
-    logger = require('morgan'),
-    path = require('path'),
-    favicon = require('serve-favicon');
+var express = require("express");
+var bodyParser = require("body-parser");
+var logger = require("morgan");
+var mongoose = require("mongoose");
 
+// Our scraping tools
+// Axios is a promised-based http library, similar to jQuery's Ajax method
+// It works on the client and on the server
+var axios = require("axios");
+var cheerio = require("cheerio");
 
-//initalizing the app
+// Require all models
+var db = require("./models");
+
+var PORT = process.env.PORT || 3000;
+
+// Initialize Express
 var app = express();
 
-//setting up the database
-var config = require('./config/database');
-mongoose.Promise = Promise;
-mongoose
-    .connect(config.database)
-    .then( result => {
-    console.log(`Connected to database '${result.connection[0].name}' on ${result.connection[0].host}:${result.connections[0].port}`);
-})
-.catch(err => console.log('There was an error with your connection:', err));
+// Set Handlebars.
+var exphbs = require("express-handlebars");
 
-//setting up favicon middleware
-app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')));
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-//setting up morgan middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+// Use morgan logger for logging requests
+app.use(logger("dev"));
+// Use body-parser for handling form submissions
+app.use(bodyParser.urlencoded({ extended: true }));
+// Use express.static to serve the public folder as a static directory
+app.use(express.static("public"));
 
+// Configure middleware
 
-//setting up handlebars
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+// Routes
+// =============================================================
+require("./routes/html-routes.js")(app);
+require("./routes/author-routes.js")(app);
+require("./routes/notes-routes.js")(app);
+require("./routes/scraper-routes.js")(app);
 
-//static directory
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/articles',express.static(path.join(__dirname, 'public')));
-app.use('/notes',express.static(path.join(__dirname, 'public')));
+let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/week18Populater";
 
-//setting up routes
-var index = require('./routes/index'),
-    articles = require('./routes/articles'),
-    notes = require('./routes/notes'),
-    scrape = require('./routes/scrape');
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI);
 
-app.use('/', index);
-app.use('/articles', articles);
-app.use('/notes', notes);
-app.use('/scrape', scrape);
-
-
-//starting server
-var PORT = process.env.PORT || 3000;
-app.listen(PORT, function () {
-    console.log(`Listening on http://localhost:${PORT}`);
-});
+// Start the server
+app.listen(PORT, function() {
+    console.log("App running on port " + PORT + "!");
+  });
