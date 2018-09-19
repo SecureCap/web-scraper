@@ -11,8 +11,8 @@ function newScrape() {
 
 //Delete an article
 $(".delete-article").on("click", function(event){
-    let id = $(this).data("id");
-    let selected = $(this).parent().parent();
+    var id = $(this).data("id");
+    var selected = $(this).parent().parent();
 
     $.ajax({
         type: "GET",
@@ -27,8 +27,8 @@ $(".delete-article").on("click", function(event){
 
 //Add A Note
 $(".add-note").on("click", function(event){
-    let id = $(this).data("id");
-    let newNote = $(this).siblings("textarea").val();
+    var id = $(this).data("id");
+    var newNote = $(this).siblings("textarea").val();
     console.log("ID: " + id + " Note: " + newNote);
     //Run a POST method to pass the note to the backend
 
@@ -47,7 +47,7 @@ $(".add-note").on("click", function(event){
 
 //See Current Notes
 $(".get-note").on("click", function(event){
-    let id = $(this).data("id");
+    var id = $(this).data("id");
 
     console.log("ID: " + id)
     //Run a POST method to pass the note to the backend

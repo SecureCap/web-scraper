@@ -1,6 +1,6 @@
-let db = require("../models");
-let axios = require("axios");
-let cheerio = require("cheerio");
+var db = require("../models");
+var axios = require("axios");
+var cheerio = require("cheerio");
 var mongoose = require("mongoose");
 
 
@@ -10,12 +10,12 @@ module.exports = function(app) {
         // First, we grab the body of the html with request
         axios.get("https://www.thetakeout.com/").then(function(response) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
-            let $ = cheerio.load(response.data);
+            var $ = cheerio.load(response.data);
             console.log("Cheerio!")
             // Now, we grab every h2 within an article tag, and do the following:
             $("div.post-wrapper article").each(function(i, element) {
                 // Save an empty result object
-                let result = {};
+                var result = {};
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.heading = $(this)
