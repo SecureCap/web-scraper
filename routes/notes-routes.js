@@ -1,5 +1,5 @@
 require("body-parser");
-let db = require("../models");
+var db = require("../models");
 require("mongoose");
 
 module.exports = function(app) {

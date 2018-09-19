@@ -31,7 +31,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-// Configure middleware
+// database configuration with mongoose
+var databaseUri = 'mongodb://localhost/week18day3mongoose';
+
+if (process.env.MONGODB_URI) {
+
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  
+  mongoose.connect(databaseUri);
+}
+//end of database config
+
+var db = mongoose.connection;
+
+db.on('error', function(err) {
+  console.log('Mongoose Error: ', err);
+});
+
+db.once('open', function() {
+  console.log('Mongoose connection successful.');
+});
 
 // Routes
 // =============================================================
