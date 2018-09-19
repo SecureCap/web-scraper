@@ -27,9 +27,9 @@ app.set("view engine", "handlebars");
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 // database configuration with mongoose
 var databaseUri = 'mongodb://localhost/week18day3mongoose';
