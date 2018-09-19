@@ -2,6 +2,7 @@ require("body-parser");
 var db = require("../models");
 require("mongoose");
 
+
 module.exports = function(app) {
   
     // Route for grabbing a specific Article by id, populate it with it's note

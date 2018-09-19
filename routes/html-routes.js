@@ -1,6 +1,7 @@
 let path = require("path");
 let db = require("../models");
 
+
 module.exports = function(app) {
 
   // Route for getting all Articles from the db
